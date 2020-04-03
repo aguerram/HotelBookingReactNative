@@ -29,7 +29,8 @@ export default function App(props) {
         await Font.loadAsync({
           ...Ionicons.font,
           "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
-          moon: require("./assets/fonts/Moon2.0-Regular.otf")
+          moon: require("./assets/fonts/Moon2.0-Regular.otf"),
+          ReenieBeanie: require("./assets/fonts/ReenieBeanie.ttf")
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -56,12 +57,18 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen
               options={{
-                headerShown:false
+                headerShown: false
               }}
               name="Root"
               component={HomeScreen}
             />
-            <Stack.Screen name="App" component={BottomTabNavigator} />
+            <Stack.Screen
+              name="App"
+              options={{
+                headerTintColor: "white"
+              }}
+              component={BottomTabNavigator}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
@@ -72,7 +79,6 @@ export default function App(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    marginTop:StatusBar.currentHeight
+    backgroundColor: "#fff"
   }
 });

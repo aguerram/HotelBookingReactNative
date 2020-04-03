@@ -3,11 +3,11 @@ import {Text,StyleSheet} from 'react-native'
 const MoonText = ({align,white,bold,...props})=>{
     const setStyles = ()=>{
         let style= {}
-        if(white)
+        if(white || props.color)
         {   
             style={
                 ...style,
-                color:'white'
+                color:props.color?props.color:"white"
             }
         }
         if(align)
@@ -31,7 +31,6 @@ const MoonText = ({align,white,bold,...props})=>{
                 fontWeight:"bold"
             }
         }
-        console.log(style);
         return style
     }
     return <Text {...props} style={[props.style, { fontFamily: 'moon'},setStyles()]} />

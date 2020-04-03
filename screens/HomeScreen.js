@@ -1,38 +1,84 @@
 import * as React from "react";
 import {
   Image,
-  Platform,
   StyleSheet,
   Text,
   View,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button,
+  StatusBar
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 import { MonoText } from "../components/StyledText";
 import MoonText from "../components/MoonText";
-import SearchField from '../components/SearchField'
+import InputField from "../components/InputField";
+import Styles from "../constants/Styles";
 export default function HomeScreen(props) {
   React.useEffect(() => {}, []);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container, { marginTop: StatusBar.currentHeight }]}
+    >
       <ImageBackground
         source={require("../assets/images/login_background.jpg")}
         style={styles.backgroundImage}
       >
-        <KeyboardAvoidingView style={[styles.flex,styles.overlay]}>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={[styles.flex, styles.overlay]}
+        >
+          <Text
+            style={{
+              fontFamily: "ReenieBeanie",
+              color: "white",
+              fontSize: 96,
+              textAlign: "center"
+            }}
+          >
+            BookIT
+          </Text>
           <MoonText white size={23} bold align={"center"}>
             Choisir un emplacement pour
           </MoonText>
           <MoonText white size={19} align={"center"}>
             Trouver un hôtel
           </MoonText>
-          <SearchField/>
+          <View
+          style={
+            {
+              marginHorizontal:10
+            }
+          }
+          >
+            <InputField
+              containerStyle={{
+                marginTop: 10
+              }}
+              onChange={val => {
+                console.log(val);
+              }}
+              placeholder="Trouver un lieu"
+            />
+          </View>
+          <View
+            style={[Styles.flex, { justifyContent: "flex-end", marginTop: 10 }]}
+          >
+            <View style={[{ alignSelf: "center" }]}>
+              <Button
+                onPress={() => {
+                  props.navigation.push("App");
+                }}
+                type="outline"
+                title="Rechercher"
+              />
+            </View>
+          </View>
         </KeyboardAvoidingView>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -53,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center"
   },
-  overlay:{
-    backgroundColor:"rgba(10, 14, 240, 0.31)"
+  overlay: {
+    backgroundColor: "rgba(10, 14, 240, 0.31)"
   }
 });

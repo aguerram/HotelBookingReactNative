@@ -29,7 +29,10 @@ export default function BottomTabNavigator({ navigation, route }) {
     <BottomTab.Navigator tabBarOptions={{
           activeTintColor: Colors.tabIconSelected,
           inactiveTintColor: Colors.tabIconDefault,
-        }} initialRouteName={INITIAL_ROUTE_NAME}>
+          
+        }} initialRouteName={INITIAL_ROUTE_NAME}
+
+        >
       {/*<BottomTab.Screen
                 name="Home"
                 component={HomeScreen}
@@ -45,7 +48,8 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: "Trouver un hotel",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
-          )
+          ),
+          
         }}
       />
     </BottomTab.Navigator>
