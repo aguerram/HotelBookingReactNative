@@ -7,16 +7,17 @@ import Colors from "../constants/Colors";
 
 import SearchScreen from "../screens/SearchScreen";
 import AllHotelsScreen from "../screens/AllHotelsScreen";
+import { NavigationRedux } from "../data/connect";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
 
-export default function BottomTabNavigator({ navigation, route }) {
+function BottomTabNavigator({ navigation, route,...props }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({
-    headerTitle: getHeaderTitle(route),
+    headerTitle: getHeaderTitle(route,props.pageTitles),
     headerBackground: () => (
       <LinearGradient
         colors={["#B84BFF", "#72B5FE"]}
@@ -27,7 +28,6 @@ export default function BottomTabNavigator({ navigation, route }) {
     ),
     headerTitleStyle: { color: "#fff" },
   });
-
   return (
     <BottomTab.Navigator
       tabBarOptions={{
@@ -68,14 +68,16 @@ export default function BottomTabNavigator({ navigation, route }) {
   );
 }
 
-function getHeaderTitle(route) {
+function getHeaderTitle(route,pageTitles) {
   const routeName =
     route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
-  switch (routeName) {
+  return pageTitles[routeName] || routeName
+  /*switch (routeName) {
     case "Search":
       return "Trouver un hotel";
     case "AllHotels":
       return "Tous les hôtel";
-  }
+  }*/
 }
+export default NavigationRedux(BottomTabNavigator)
