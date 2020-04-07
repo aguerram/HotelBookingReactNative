@@ -7,6 +7,8 @@ import {
   Text,
   Button,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +18,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
 import { Provider } from "react-redux";
 import Store from "./data/store";
 const Stack = createStackNavigator();
@@ -81,9 +84,24 @@ export default function App(props) {
                 name="App"
                 options={{
                   headerTintColor: "white",
-
                 }}
                 component={BottomTabNavigator}
+              />
+              <Stack.Screen
+                options={{
+                  headerTintColor: "white",
+                  headerBackground: () => (
+                    <LinearGradient
+                      colors={["#B84BFF", "#72B5FE"]}
+                      style={{ flex: 1 }}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    />
+                  ),
+                  headerTitleStyle: { color: "#fff" },
+                }}
+                name="Login"
+                component={LoginScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>
