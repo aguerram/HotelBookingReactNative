@@ -27,7 +27,6 @@ export default function HomeScreen(props) {
         style={styles.backgroundImage}
       >
         <KeyboardAvoidingView
-          behavior="padding"
           style={[styles.flex, styles.overlay]}
         >
           <Text
