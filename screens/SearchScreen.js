@@ -12,7 +12,14 @@ import Colors from "../constants/Colors";
 import InputField from "../components/InputField";
 import DatePicker from "react-native-datepicker";
 import RNPickerSelect from "react-native-picker-select";
-
+import { NavigationRedux } from "../data/connect";
+const STARS = [
+  { label: "1 étoile", value: "1" },
+  { label: "2 étoile", value: "2" },
+  { label: "3 étoile", value: "3" },
+  { label: "4 étoile", value: "4" },
+  { label: "5 étoile", value: "5" },
+];
 const SearchScreen = (props) => {
   return (
     <ScrollView alwaysBounceVertical>
@@ -25,7 +32,13 @@ const SearchScreen = (props) => {
           <MoonText size={16} color={Colors.mediumLightGray}>
             Choisissez un lieu
           </MoonText>
-          <InputField placeholder="Trouver un lieu" />
+          <InputField
+            onChange={(val) => {
+              props.update("location", val);
+            }}
+            value={props.search?.location}
+            placeholder="Trouver un lieu"
+          />
         </View>
         <View
           style={{
@@ -46,7 +59,12 @@ const SearchScreen = (props) => {
             <MoonText size={16} color={Colors.mediumLightGray}>
               De
             </MoonText>
-            <DateP />
+            <DateP
+              onChange={(date) => {
+                props.update("from", date);
+              }}
+              value={props.search?.from}
+            />
           </View>
           <View
             style={{
@@ -57,7 +75,12 @@ const SearchScreen = (props) => {
             <MoonText size={16} color={Colors.mediumLightGray}>
               à
             </MoonText>
-            <DateP />
+            <DateP
+              onChange={(date) => {
+                props.update("to", date);
+              }}
+              value={props.search?.to}
+            />
           </View>
         </View>
 
@@ -76,7 +99,14 @@ const SearchScreen = (props) => {
             <MoonText color={Colors.mediumLightGray} icon="md-people">
               Réservé pour
             </MoonText>
-            <InputField keyboardType="number-pad" placeholder="1" />
+            <InputField
+              onChange={(val) => {
+                props.update("for", val);
+              }}
+              value={props.search?.for}
+              keyboardType="number-pad"
+              placeholder="1"
+            />
           </View>
           <View
             style={{
@@ -86,7 +116,14 @@ const SearchScreen = (props) => {
             <MoonText color={Colors.mediumLightGray} icon="md-home">
               Chambres
             </MoonText>
-            <InputField keyboardType="number-pad" placeholder="1" />
+            <InputField
+              onChange={(val) => {
+                props.update("rooms", val);
+              }}
+              value={props.search?.rooms}
+              keyboardType="number-pad"
+              placeholder="1"
+            />
           </View>
         </View>
 
@@ -101,13 +138,15 @@ const SearchScreen = (props) => {
               alignItems: "stretch",
             }}
           >
-            <Button onPress={()=>{
-              props.navigation.jumpTo("AllHotels")
-              props.navigation.setParams({
-                "searchData":"Hello this is result"
-              })
-              console.log(props.navigation)
-            }} style={{}} title="Rechercher" />
+            <Button
+              onPress={() => {
+                props.allHotelTitle("Agadir, Marina");
+                props.navigation.jumpTo("AllHotels");
+              }}
+              style={{}}
+              color="#B84BFF"
+              title="Rechercher"
+            />
           </View>
         </View>
         <View
@@ -124,18 +163,14 @@ const SearchScreen = (props) => {
           >
             <MoonText>Minimum d'étoiles</MoonText>
             <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
+              onValueChange={(value) => {
+                props.update("minStars", value);
+              }}
               placeholder={{
                 label: "N'importe quel nombre d'étoiles",
                 value: 0,
               }}
-              items={[
-                { label: "1 étoile", value: "1" },
-                { label: "2 étoile", value: "2" },
-                { label: "3 étoile", value: "3" },
-                { label: "4 étoile", value: "4" },
-                { label: "5 étoile", value: "5" },
-              ]}
+              items={STARS}
             />
           </View>
 
@@ -154,7 +189,14 @@ const SearchScreen = (props) => {
               <MoonText color={Colors.mediumLightGray} icon="md-cash">
                 Min prix (DH)
               </MoonText>
-              <InputField keyboardType="number-pad" placeholder="0" />
+              <InputField
+                onChange={(val) => {
+                  props.update("minPrice", val);
+                }}
+                value={props.search?.minPrice}
+                keyboardType="number-pad"
+                placeholder="0"
+              />
             </View>
             <View
               style={{
@@ -164,7 +206,14 @@ const SearchScreen = (props) => {
               <MoonText color={Colors.mediumLightGray} icon="md-cash">
                 Max prix (DH)
               </MoonText>
-              <InputField keyboardType="number-pad" placeholder="0" />
+              <InputField
+                onChange={(val) => {
+                  props.update("maxPrice", val);
+                }}
+                value={props.search?.maxPrice}
+                keyboardType="number-pad"
+                placeholder="0"
+              />
             </View>
           </View>
         </View>
@@ -174,17 +223,14 @@ const SearchScreen = (props) => {
 };
 
 const DateP = (props) => {
-  let d = new Date();
-  let dataText = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-  const [date, setDate] = useState(dataText);
   return (
     <DatePicker
       style={{ width: 200 }}
-      date={date}
+      date={props.value}
       mode="date"
       placeholder="select date"
       format="YYYY-MM-DD"
-      minDate={dataText}
+      minDate={props.value}
       confirmBtnText="Confirmer"
       cancelBtnText="Annuler"
       customStyles={{
@@ -200,11 +246,11 @@ const DateP = (props) => {
         // ... You can check the source to find the other keys.
       }}
       onDateChange={(date) => {
-        console.log(date);
+        props.onChange && props.onChange(date);
       }}
     />
   );
 };
 
 const styles = StyleSheet.create({});
-export default SearchScreen;
+export default NavigationRedux(SearchScreen);

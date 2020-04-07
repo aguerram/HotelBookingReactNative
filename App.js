@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View, Text } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  Text,
+  Button,
+} from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,7 +17,7 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 import HomeScreen from "./screens/HomeScreen";
 import { Provider } from "react-redux";
-import Store from "./data/store"
+import Store from "./data/store";
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -74,6 +81,7 @@ export default function App(props) {
                 name="App"
                 options={{
                   headerTintColor: "white",
+
                 }}
                 component={BottomTabNavigator}
               />

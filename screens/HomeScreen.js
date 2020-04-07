@@ -15,7 +15,8 @@ import { MonoText } from "../components/StyledText";
 import MoonText from "../components/MoonText";
 import InputField from "../components/InputField";
 import Styles from "../constants/Styles";
-export default function HomeScreen(props) {
+import { NavigationRedux } from "../data/connect";
+function HomeScreen(props) {
   React.useEffect(() => {}, []);
 
   return (
@@ -57,9 +58,10 @@ export default function HomeScreen(props) {
                 marginTop: 10
               }}
               onChange={val => {
-                console.log(val);
+                props.update("location",val)
               }}
               placeholder="Trouver un lieu"
+              value={props.search?.location}
             />
           </View>
           <View
@@ -70,8 +72,8 @@ export default function HomeScreen(props) {
                 onPress={() => {
                   props.navigation.push("App");
                 }}
-                type="outline"
                 title="Rechercher"
+                color="#B84BFF"
               />
             </View>
           </View>
@@ -102,3 +104,4 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(10, 14, 240, 0.31)"
   }
 });
+export default NavigationRedux(HomeScreen)

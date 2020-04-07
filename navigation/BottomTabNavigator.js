@@ -8,16 +8,17 @@ import Colors from "../constants/Colors";
 import SearchScreen from "../screens/SearchScreen";
 import AllHotelsScreen from "../screens/AllHotelsScreen";
 import { NavigationRedux } from "../data/connect";
+import AccountScreen from "../screens/AccountScreen";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
 
-function BottomTabNavigator({ navigation, route,...props }) {
+function BottomTabNavigator({ navigation, route, ...props }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({
-    headerTitle: getHeaderTitle(route,props.pageTitles),
+    headerTitle: getHeaderTitle(route, props.pageTitles),
     headerBackground: () => (
       <LinearGradient
         colors={["#B84BFF", "#72B5FE"]}
@@ -62,17 +63,29 @@ function BottomTabNavigator({ navigation, route,...props }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-book" />
           ),
+
+        }}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{
+          title: "Mon compte",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-person" />
+          ),
+
         }}
       />
     </BottomTab.Navigator>
   );
 }
 
-function getHeaderTitle(route,pageTitles) {
+function getHeaderTitle(route, pageTitles) {
   const routeName =
     route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
-  return pageTitles[routeName] || routeName
+  return pageTitles[routeName] || routeName;
   /*switch (routeName) {
     case "Search":
       return "Trouver un hotel";
@@ -80,4 +93,4 @@ function getHeaderTitle(route,pageTitles) {
       return "Tous les hôtel";
   }*/
 }
-export default NavigationRedux(BottomTabNavigator)
+export default NavigationRedux(BottomTabNavigator);

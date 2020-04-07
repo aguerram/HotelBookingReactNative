@@ -2,7 +2,8 @@ import { createStore, combineReducers } from "redux";
 const reducers = {},
   initial = {};
 const hocs = {
-  "pageTitles":require("./reducers/pageTitles")
+  "pageTitles":require("./reducers/pageTitles"),
+  "search":require("./reducers/search"),
 };
 for(let hoc in hocs)
 {

@@ -3,6 +3,7 @@ import types from "../types";
 export const initial = {
     "Search":"Trouver un hotel",
     "AllHotels":"Tous les hôtel",
+    "Account":"Mon compte",
 }
 
 export const reducer = (state=initial,action)=>{

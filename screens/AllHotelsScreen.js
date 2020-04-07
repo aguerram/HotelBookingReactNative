@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Alert, Button } from "react-native";
 import HotelView from "../components/HotelView";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import MoonText from "../components/MoonText";
 const AllHotelsScreen = (props) => {
-  useEffect(() => {
-    props.navigation.setOptions({
-      headerTitle: "Screen title",
-    });
-    console.log(props.navigation.state)
-  });
+  useEffect(() => {});
   return (
     <ScrollView>
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.setOptions({
-            headerTitle: "Screen title",
-          });
-        }}
-      >
+      <View style={
+        {
+          padding:8,
+          backgroundColor:"white"
+        }
+      }>
+        <Button color="#DC463C" title="Effacer les résultats"/>
+        <View style={{marginTop:5}}></View>
+        <MoonText >3 résultats trouvés</MoonText>
+      </View>
+      <View>
         <HotelView />
-      </TouchableOpacity>
 
-      <HotelView />
-      <HotelView />
-      <HotelView />
+        <HotelView />
+        <HotelView />
+        <HotelView />
+      </View>
     </ScrollView>
   );
 };

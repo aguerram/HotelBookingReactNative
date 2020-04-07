@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import MoonText from "./MoonText";
 import StarRating from "react-native-star-rating";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const HotelView = (props) => {
   return (
@@ -20,7 +21,7 @@ const HotelView = (props) => {
         }}
         source={require("../assets/images/hotel.jpg")}
       />
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: "white",
           padding: 10,
@@ -63,7 +64,7 @@ const HotelView = (props) => {
             starSize={20}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
