@@ -32,7 +32,11 @@ const MoonText = ({ align, white, bold, ...props }) => {
     return style;
   };
   return (
-    <Text>
+    <Text style={
+        {
+            textAlign:align||"left"
+        }
+    }>
       {props.icon && (
         <Text style={[{paddingHorizontal:60}, props.iconStyle]}>
           <Ionicons color={setStyles().color} size={16} name={props.icon} />

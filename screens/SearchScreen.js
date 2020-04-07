@@ -101,7 +101,13 @@ const SearchScreen = (props) => {
               alignItems: "stretch",
             }}
           >
-            <Button style={{}} title="Rechercher" />
+            <Button onPress={()=>{
+              props.navigation.jumpTo("AllHotels")
+              props.navigation.setParams({
+                "searchData":"Hello this is result"
+              })
+              console.log(props.navigation)
+            }} style={{}} title="Rechercher" />
           </View>
         </View>
         <View

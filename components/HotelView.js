@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import MoonText from "./MoonText";
+import StarRating from "react-native-star-rating";
+
 const HotelView = (props) => {
   return (
     <View
@@ -14,25 +16,26 @@ const HotelView = (props) => {
         style={{
           width: "100%",
           height: 200,
+          borderRadius:10
         }}
         source={require("../assets/images/hotel.jpg")}
       />
       <View
         style={{
           backgroundColor: "white",
-          padding: 10
+          padding: 10,
+          borderRadius:10
         }}
       >
         <View
           style={{
-            
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems:"center"
+            alignItems: "center",
           }}
         >
           <MoonText bold size={18}>
-            Hotel marina{" "}
+            Hotel marina
           </MoonText>
           <Text
             style={{
@@ -43,7 +46,22 @@ const HotelView = (props) => {
           </Text>
         </View>
         <View>
-            <MoonText color="#B9B4B4" icon="md-pin">Agadir, marina rue moulay hassan n 65</MoonText>
+          <MoonText color="#B9B4B4" icon="md-pin">
+            Agadir, marina rue moulay hassan n 65
+          </MoonText>
+        </View>
+        <View>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            rating={4.5}
+            fullStarColor={"#FCD900"}
+            disabled
+            containerStyle={{
+              width: 120,
+            }}
+            starSize={20}
+          />
         </View>
       </View>
     </View>
