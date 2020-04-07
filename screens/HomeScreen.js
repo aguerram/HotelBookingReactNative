@@ -32,7 +32,7 @@ export default function HomeScreen(props) {
         >
           <Text
             style={{
-              fontFamily: "ReenieBeanie",
+              fontFamily: "reenie-beanie",
               color: "white",
               fontSize: 96,
               textAlign: "center"

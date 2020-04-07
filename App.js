@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { Platform, StatusBar, StyleSheet, View ,Text} from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
@@ -30,13 +30,15 @@ export default function App(props) {
           ...Ionicons.font,
           "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
           moon: require("./assets/fonts/Moon2.0-Regular.otf"),
-          ReenieBeanie: require("./assets/fonts/ReenieBeanie.ttf")
+          "reenie-beanie": require("./assets/fonts/ReenieBeanie.ttf")
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
-        setLoadingComplete(true);
+        setTimeout(()=>{
+          setLoadingComplete(true);
+        },1000 )
         SplashScreen.hide();
       }
     }
@@ -44,8 +46,10 @@ export default function App(props) {
     loadResourcesAndDataAsync();
   }, []);
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return null;
+  if (!isLoadingComplete) {
+    return <View style={styles.container}>
+      <Text>Loading ...</Text>
+    </View>;
   } else {
     return (
       <View style={styles.container}>
