@@ -2,8 +2,11 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LinearGradient } from 'expo-linear-gradient';
 import TabBarIcon from "../components/TabBarIcon";
-import SearchScreen from "../screens/SearchScreen";
+
 import Colors from "../constants/Colors";
+
+import SearchScreen from "../screens/SearchScreen";
+import AllHotelsScreen from "../screens/AllHotelsScreen"
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
@@ -48,6 +51,17 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: "Trouver un hotel",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
+          ),
+          
+        }}
+      />
+      <BottomTab.Screen
+        name="AllHotels"
+        component={AllHotelsScreen}
+        options={{
+          title: "Maroc, Agadir",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-book" />
           ),
           
         }}
