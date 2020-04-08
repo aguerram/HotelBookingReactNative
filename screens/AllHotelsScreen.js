@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Alert, Button } from "react-native";
 import HotelView from "../components/HotelView";
 import MoonText from "../components/MoonText";
+import { NavigationRedux } from "../data/connect";
 const AllHotelsScreen = (props) => {
   useEffect(() => {});
+  const setHotelId = (id)=>{
+    props.setHotelId(id)
+    props.navigation.navigate("Hotel")
+  }
   return (
     <ScrollView>
       <View style={
@@ -17,14 +22,10 @@ const AllHotelsScreen = (props) => {
         <MoonText >3 résultats trouvés</MoonText>
       </View>
       <View>
-        <HotelView />
-
-        <HotelView />
-        <HotelView />
-        <HotelView />
+        <HotelView onPress={setHotelId} />
       </View>
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({});
-export default AllHotelsScreen;
+export default NavigationRedux(AllHotelsScreen);

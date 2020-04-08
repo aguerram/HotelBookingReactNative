@@ -15,6 +15,21 @@ export const NavigationRedux = connect(
             type:Types.search.update,
             key,
             value
+        }),
+        setHotelId:(id,callback)=>({
+            type:Types.hotel.setId,
+            id,
+            callback
         })
+    }
+)
+
+export const SignHotelRedux = connect(
+    (state)=>({
+        hotel:state.hotel
+    })
+    ,
+    {
+
     }
 )

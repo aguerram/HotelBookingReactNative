@@ -24,9 +24,13 @@ const AccountScreen = (props) => {
           margin: 5,
         }}
       >
-        <Button color="#B84BFF" title="S'identifier" onPress={() => {
-            props.navigation.navigate("Login")
-        }} />
+        <Button
+          color="#B84BFF"
+          title="S'identifier"
+          onPress={() => {
+            props.navigation.navigate("Login");
+          }}
+        />
         <View style={{ marginTop: 8 }}></View>
         <Button color="#B84BFF" title="Créer un compte" />
       </View>

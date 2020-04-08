@@ -4,5 +4,9 @@ export default {
     },
     search:{
         update:"@@search:update"
+    },
+    hotel:{
+        setId:"@@hotel:setId",
+        set:"@@hotel:set"
     }
 }

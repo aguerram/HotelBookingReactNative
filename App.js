@@ -19,6 +19,8 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
+import SingleHotelScreen from "./screens/SingleHotelScreen";
+import RattingScreen from "./screens/RattingScreen";
 import { Provider } from "react-redux";
 import Store from "./data/store";
 const Stack = createStackNavigator();
@@ -102,6 +104,38 @@ export default function App(props) {
                 }}
                 name="Login"
                 component={LoginScreen}
+              />
+              <Stack.Screen
+                options={{
+                  headerTintColor: "white",
+                  headerBackground: () => (
+                    <LinearGradient
+                      colors={["#B84BFF", "#72B5FE"]}
+                      style={{ flex: 1 }}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    />
+                  ),
+                  headerTitleStyle: { color: "#fff" },
+                }}
+                name="Hotel"
+                component={SingleHotelScreen}
+              />
+              <Stack.Screen
+                options={{
+                  headerTintColor: "white",
+                  headerBackground: () => (
+                    <LinearGradient
+                      colors={["#B84BFF", "#72B5FE"]}
+                      style={{ flex: 1 }}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    />
+                  ),
+                  headerTitleStyle: { color: "#fff" },
+                }}
+                name="Ratting"
+                component={RattingScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

@@ -5,6 +5,9 @@ import StarRating from "react-native-star-rating";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const HotelView = (props) => {
+  const viewHotel = (id)=>{
+      props.onPress(id)
+  }
   return (
     <View
       style={{
@@ -26,6 +29,9 @@ const HotelView = (props) => {
           backgroundColor: "white",
           padding: 10,
           borderRadius:10
+        }}
+        onPress={()=>{
+          viewHotel(35)
         }}
       >
         <View

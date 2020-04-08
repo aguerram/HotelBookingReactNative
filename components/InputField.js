@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         padding:8,
     },
     cont:{
-        
+        borderColor:"#C2BBBB",
+        borderWidth:1
     }
 })
 export default InputField

@@ -4,6 +4,7 @@ const reducers = {},
 const hocs = {
   "pageTitles":require("./reducers/pageTitles"),
   "search":require("./reducers/search"),
+  "hotel":require("./reducers/hotel"),
 };
 for(let hoc in hocs)
 {
