@@ -8,5 +8,8 @@ export default {
     hotel:{
         setId:"@@hotel:setId",
         set:"@@hotel:set"
+    },
+    hotels:{
+        set:"@@hotels:set"
     }
 }

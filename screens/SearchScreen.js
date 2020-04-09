@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Button,
+  Alert,
 } from "react-native";
 import MoonText from "../components/MoonText";
 import Colors from "../constants/Colors";
@@ -13,6 +14,8 @@ import InputField from "../components/InputField";
 import DatePicker from "react-native-datepicker";
 import RNPickerSelect from "react-native-picker-select";
 import { NavigationRedux } from "../data/connect";
+import axios from "../utils/axios";
+import { Tools } from "../utils/Tools";
 const STARS = [
   { label: "1 étoile", value: "1" },
   { label: "2 étoile", value: "2" },
@@ -21,6 +24,39 @@ const STARS = [
   { label: "5 étoile", value: "5" },
 ];
 const SearchScreen = (props) => {
+  function search() {
+    console.log(props.search);
+    let { minPrice, minStars, maxPrice, location } = props.search;
+    let errors = [];
+    if (maxPrice < minPrice && maxPrice != 0) {
+      errors.push("Le prix max doit être supérieur au prix min");
+    }
+    if (location.length < 1) {
+      errors.push("Veuillez insérer un lieu");
+    }
+
+    if (errors.length > 0) {
+      Alert.alert("Les erreurs", `${errors.join("\n")}`);
+      return;
+    }
+
+    axios({
+      url: Tools.URL(
+        `/hotel/search/${location}?minPrice=${minPrice}&minStars=${minStars}${
+          maxPrice > 0 && `&maxPrice=${maxPrice}`
+        }`
+      ),
+      method: "GET",
+    })
+      .then(({ data }) => {
+        props.setHotels(data);
+        props.allHotelTitle(props.search.location);
+        props.navigation.navigate("AllHotels");
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+      });
+  }
   return (
     <ScrollView alwaysBounceVertical>
       <KeyboardAvoidingView
@@ -140,8 +176,9 @@ const SearchScreen = (props) => {
           >
             <Button
               onPress={() => {
-                props.allHotelTitle("Agadir, Marina");
-                props.navigation.jumpTo("AllHotels");
+                search();
+
+                //props.navigation.jumpTo("AllHotels");
               }}
               style={{}}
               color="#B84BFF"

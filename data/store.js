@@ -5,6 +5,7 @@ const hocs = {
   "pageTitles":require("./reducers/pageTitles"),
   "search":require("./reducers/search"),
   "hotel":require("./reducers/hotel"),
+  "hotels":require("./reducers/hotels"),
 };
 for(let hoc in hocs)
 {

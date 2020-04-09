@@ -3,8 +3,11 @@ import { View, StyleSheet, ImageBackground, Text } from "react-native";
 import MoonText from "./MoonText";
 import StarRating from "react-native-star-rating";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { SignHotelRedux } from "../data/connect";
+import axios from "../utils/axios"
+import {Tools} from "../utils/Tools"
 
-const HotelView = (props) => {
+const HotelView = ({data,...props}) => {
   const viewHotel = (id)=>{
       props.onPress(id)
   }
@@ -31,7 +34,7 @@ const HotelView = (props) => {
           borderRadius:10
         }}
         onPress={()=>{
-          viewHotel(35)
+          viewHotel(data.id)
         }}
       >
         <View
@@ -42,26 +45,26 @@ const HotelView = (props) => {
           }}
         >
           <MoonText bold size={18}>
-            Hotel marina
+            {data.title}
           </MoonText>
           <Text
             style={{
               fontSize: 16,
             }}
           >
-            566 DH
+            {data.price} DH
           </Text>
         </View>
         <View>
           <MoonText color="#B9B4B4" icon="md-pin">
-            Agadir, marina rue moulay hassan n 65
+            {data.address}
           </MoonText>
         </View>
         <View>
           <StarRating
             disabled={false}
             maxStars={5}
-            rating={4.5}
+            rating={data.stars}
             fullStarColor={"#FCD900"}
             disabled
             containerStyle={{
@@ -75,4 +78,4 @@ const HotelView = (props) => {
   );
 };
 const styles = StyleSheet.create({});
-export default HotelView;
+export default  SignHotelRedux(HotelView);

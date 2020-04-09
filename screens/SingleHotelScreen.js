@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, ImageBackground, Button } from "react-native";
 import { SignHotelRedux } from "../data/connect";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating";
+
 import {
   TouchableNativeFeedback,
   ScrollView,
 } from "react-native-gesture-handler";
 import MoonText from "../components/MoonText";
-const SingleHotelScreen = (props) => {
+const SingleHotelScreen = ({ hotel, search, ...props }) => {
   return (
     <ScrollView
       style={{
@@ -70,7 +71,7 @@ const SingleHotelScreen = (props) => {
           }}
         >
           <MoonText color={Colors.Gray} size={20}>
-            Hotel marina{" "}
+            {hotel.title}
           </MoonText>
           <Text
             style={{
@@ -78,7 +79,7 @@ const SingleHotelScreen = (props) => {
               fontSize: 18,
             }}
           >
-            500 DH
+            {hotel.price} DH
           </Text>
         </View>
         <View
@@ -97,7 +98,7 @@ const SingleHotelScreen = (props) => {
             <StarRating
               disabled={false}
               maxStars={5}
-              rating={4.5}
+              rating={hotel.stars}
               fullStarColor={"#FCD900"}
               disabled
               containerStyle={{
@@ -110,7 +111,7 @@ const SingleHotelScreen = (props) => {
                 fontSize: 12,
               }}
             >
-              13 Votes
+              {hotel.total_votes_count} Votes
             </Text>
           </View>
           <Text
@@ -119,7 +120,7 @@ const SingleHotelScreen = (props) => {
               fontSize: 18,
             }}
           >
-            Total : 1000 DH
+            Total : {search.rooms * hotel.price} DH
           </Text>
         </View>
       </View>
@@ -142,7 +143,8 @@ const SingleHotelScreen = (props) => {
               color: "white",
             }}
           >
-            2 Chambres x 500 DH = 1000 DH
+            {search.rooms} Chambres x {hotel.price} DH ={" "}
+            {search.rooms * hotel.price} DH
           </Text>
           <Text
             style={{
@@ -156,7 +158,7 @@ const SingleHotelScreen = (props) => {
               color: "white",
             }}
           >
-            De 29/06/2020 à 07/07/2020
+            De {search.from} à {search.to}
           </Text>
         </View>
         <View
@@ -168,24 +170,18 @@ const SingleHotelScreen = (props) => {
           }}
         >
           <MoonText color={Colors.Gray} icon="md-pin" size={16}>
-          Agadir, marina rue moulay hassan n 65
+            {hotel.address}
           </MoonText>
           <MoonText color={Colors.Gray} icon="md-call" size={16}>
-            +212 5326555
+            {hotel.phone}
           </MoonText>
-          <MoonText color={Colors.Gray} icon="md-mail" size={16}>
-            agurram20303@live.fr
+          <MoonText color={Colors.Gray} icon="md-at" size={16}>
+            {hotel.siteweb}
           </MoonText>
         </View>
 
         <View style={{ marginTop: 5 }}></View>
-        <MoonText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-          purus sit amet luctus venenatis, lectus magna fringilla urna,
-          porttitor rhoncus dolor purus non enim praesent elementum facilisis
-          leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
-          diam quis enim lobortis scelerisque fermentum dui faucibus in.
-        </MoonText>
+        <MoonText>{hotel.description}</MoonText>
       </View>
     </ScrollView>
   );

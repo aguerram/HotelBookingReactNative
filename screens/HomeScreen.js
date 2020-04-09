@@ -7,7 +7,8 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Button,
-  StatusBar
+  StatusBar,
+  Alert,
 } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
@@ -16,9 +17,28 @@ import MoonText from "../components/MoonText";
 import InputField from "../components/InputField";
 import Styles from "../constants/Styles";
 import { NavigationRedux } from "../data/connect";
+import axios from "../utils/axios";
+import { Tools } from "../utils/Tools";
 function HomeScreen(props) {
   React.useEffect(() => {}, []);
-
+  const rechercher = () => {
+    if (props.search?.location.length > 1) {
+      axios({
+        url: Tools.URL(`/hotel/search/${props.search.location}`),
+        method: "GET",
+      })
+        .then(({ data }) => {
+          props.setHotels(data);
+          props.allHotelTitle(props.search.location);
+          props.navigation.push("App");
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+        });
+    } else {
+      Alert.alert("Mauvais lieu", "Veuillez insérer un lieu");
+    }
+  };
   return (
     <KeyboardAvoidingView
       style={[styles.container, { marginTop: StatusBar.currentHeight }]}
@@ -27,15 +47,13 @@ function HomeScreen(props) {
         source={require("../assets/images/login_background.jpg")}
         style={styles.backgroundImage}
       >
-        <KeyboardAvoidingView
-          style={[styles.flex, styles.overlay]}
-        >
+        <KeyboardAvoidingView style={[styles.flex, styles.overlay]}>
           <Text
             style={{
               fontFamily: "reenie-beanie",
               color: "white",
               fontSize: 96,
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             BookIT
@@ -47,18 +65,16 @@ function HomeScreen(props) {
             Trouver un hôtel
           </MoonText>
           <View
-          style={
-            {
-              marginHorizontal:10
-            }
-          }
+            style={{
+              marginHorizontal: 10,
+            }}
           >
             <InputField
               containerStyle={{
-                marginTop: 10
+                marginTop: 10,
               }}
-              onChange={val => {
-                props.update("location",val)
+              onChange={(val) => {
+                props.update("location", val);
               }}
               placeholder="Trouver un lieu"
               value={props.search?.location}
@@ -70,7 +86,7 @@ function HomeScreen(props) {
             <View style={[{ alignSelf: "center" }]}>
               <Button
                 onPress={() => {
-                  props.navigation.push("App");
+                  rechercher();
                 }}
                 title="Rechercher"
                 color="#B84BFF"
@@ -87,21 +103,21 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   backgroundImage: {
     width: "100%",
     height: "100%",
     flex: 1,
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
   },
   overlay: {
-    backgroundColor: "rgba(10, 14, 240, 0.31)"
-  }
+    backgroundColor: "rgba(10, 14, 240, 0.31)",
+  },
 });
-export default NavigationRedux(HomeScreen)
+export default NavigationRedux(HomeScreen);
