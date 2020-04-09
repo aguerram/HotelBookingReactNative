@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import MoonText from "../components/MoonText";
+import {Tools} from "../utils/Tools"
 const SingleHotelScreen = ({ hotel, search, ...props }) => {
   return (
     <ScrollView
@@ -24,7 +25,7 @@ const SingleHotelScreen = ({ hotel, search, ...props }) => {
           height: 200,
           borderRadius: 10,
         }}
-        source={require("../assets/images/hotel.jpg")}
+        source={hotel.cover?{uri:Tools.STORAGE(hotel.id)}:require("../assets/images/hotel.jpg")}
       >
         <View
           style={{

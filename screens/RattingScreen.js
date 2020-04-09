@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Button, Alert } from "react-native";
 import MoonText from "../components/MoonText";
 import Colors from "../constants/Colors";
 import StarRating from "react-native-star-rating";
@@ -8,6 +8,9 @@ import axios from "../utils/axios";
 import { Tools } from "../utils/Tools";
 const RattingScreen = ({ hotel, ...props }) => {
   const [rating, setRating] = useState(4.5);
+  useEffect(() => {
+    setRating(hotel.stars);
+  }, []);
   const selectedStar = (amount) => {
     setRating(amount);
   };
@@ -15,15 +18,31 @@ const RattingScreen = ({ hotel, ...props }) => {
     axios({
       method: "POST",
       url: Tools.URL(`/hotel/vote/${hotel.id}`),
+      data: {
+        stars: rating,
+      },
     })
       .then(({ data }) => {
-        console.log(data);
+        Alert.alert("Succès", data.message);
+        axios({
+          url: Tools.URL(`/hotel/${hotel.id}`),
+          method: "GET",
+        })
+          .then(({ data }) => {
+            props.setHotel(data);
+            props.modifyHotelList(data);
+            props.navigation.goBack();
+          })
+          .catch((err) => {
+            console.log(err.response.status);
+          });
       })
-      .catch(({response}) => {
-        console.log(response)
-        if(response.status == 401)
-        {
-          props.navigation.navigate("Login")
+      .catch(({ response }) => {
+        if (response.status == 401) {
+          global.token = null;
+          props.navigation.navigate("Login");
+        } else {
+          Alert.alert("Erreur", response.data.message);
         }
       });
   };

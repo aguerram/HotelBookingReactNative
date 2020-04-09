@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler'
 
 const InputField = ({keyboardType,...props})=>{
     return <View  style={[styles.cont,props.containerStyle]}>
-        <TextInput value={props.value || ""} keyboardType={keyboardType||"default"} onChange={(val)=>{
+        <TextInput value={props.value || ""} secureTextEntry={props.isPassword} keyboardType={keyboardType||"default"} onChange={(val)=>{
             props.onChange && props.onChange(val.nativeEvent.text)
         }} placeholder={props.placeholder} style={[Styles.moonFonts,styles.searchField]} />
     </View>

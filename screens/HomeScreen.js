@@ -91,6 +91,14 @@ function HomeScreen(props) {
                 title="Rechercher"
                 color="#B84BFF"
               />
+              <View style={{marginTop:8}}></View>
+              <Button
+                onPress={() => {
+                  props.navigation.navigate("App")
+                }}
+                title="Recherche Avancée"
+                color="#72B5FE"
+              />
             </View>
           </View>
         </KeyboardAvoidingView>

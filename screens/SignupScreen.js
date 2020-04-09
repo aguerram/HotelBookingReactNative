@@ -12,36 +12,41 @@ import InputField from "../components/InputField";
 import MoonText from "../components/MoonText";
 import Colors from "../constants/Colors";
 import { LoginRedux } from "../data/connect";
-import axios from "../utils/axios"
-import {Tools} from "../utils/Tools"
-const LoginScreen = (props) => {
-  useEffect(() => {
-    if(global.token)
-    {
-      props.navigation.goBack()
-    }
-  });
+import axios from "../utils/axios";
+import { Tools } from "../utils/Tools";
+const SignupRedux = (props) => {
+  useEffect(() => {});
   const update = (key, value) => {
     props.update(key, value);
   };
-  const login = ()=>{
+  const login = () => {
     axios({
-      url:Tools.URL(`/login`),
-      method:"POST",
-      data:{
-        email:props.auth.email,
-        password:props.auth.password
-      }
-    }).then(({data})=>{
-      global.token = data.message
-      props.setAccountId()
-      props.navigation.goBack()
+      url: Tools.URL(`/signup`),
+      method: "POST",
+      data: {
+        email: props.auth.email,
+        password: props.auth.password,
+        name: props.auth.name,
+        tele: props.auth.tele,
+      },
     })
-    .catch(({response})=>{
-      Alert.alert("Invalide","les informations d'identification invalides");
-      props.update("password","")
-    })
-  }
+      .then(({ data }) => {
+        Alert(data.message)
+        update("email","")
+        update("password","")
+        update("tele","")
+        update("name","")
+      })
+      .catch(({ response }) => {
+        let errors = [];
+        for (let e of Object.keys(response.data.errors)) {
+            errors.push(response.data.errors[e]);
+        }
+        console.log(response)
+        Alert.alert("Erreur", errors.join("\n"));
+        //props.update("password", "");
+      });
+  };
   return (
     <ImageBackground
       source={require("../assets/images/login_background.jpg")}
@@ -65,8 +70,24 @@ const LoginScreen = (props) => {
           }}
         >
           <MoonText color={Colors.mediumLightGray} align="center" size={30}>
-            S'identifier
+            Créez compte
           </MoonText>
+          <InputField
+            value={props.auth?.tele}
+            onChange={(val) => {
+              update("tele", val);
+            }}
+            placeholder="Téléphone"
+          />
+          <View style={{ marginTop: 8 }}></View>
+          <InputField
+            value={props.auth?.name}
+            onChange={(val) => {
+              update("name", val);
+            }}
+            placeholder="Nom complète"
+          />
+          <View style={{ marginTop: 8 }}></View>
           <InputField
             value={props.auth?.email}
             onChange={(val) => {
@@ -85,15 +106,16 @@ const LoginScreen = (props) => {
             isPassword
           />
           <View style={{ marginTop: 8 }}></View>
-          <Button onPress={login} color={Colors.tintColor} title="S'identifier" />
-          <View style={{marginTop:8}}></View>
-          <Button onPress={()=>{
-            props.navigation.navigate("Signup");
-          }} color={Colors.tintColor} title="Créer un compte" />
+          <Button
+            onPress={login}
+            color={Colors.tintColor}
+            title="Créez votre compte"
+          />
+          <View style={{ marginTop: 8 }}></View>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
 const styles = StyleSheet.create({});
-export default LoginRedux(LoginScreen);
+export default LoginRedux(SignupRedux);

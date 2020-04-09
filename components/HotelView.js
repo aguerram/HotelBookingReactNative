@@ -23,9 +23,11 @@ const HotelView = ({data,...props}) => {
         style={{
           width: "100%",
           height: 200,
-          borderRadius:10
+          borderRadius:10,
+          flex:1
         }}
-        source={require("../assets/images/hotel.jpg")}
+        resizeMode='cover' 
+        source={{uri:Tools.STORAGE(data.id)}}
       />
       <TouchableOpacity
         style={{

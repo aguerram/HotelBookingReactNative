@@ -6,6 +6,8 @@ const hocs = {
   "search":require("./reducers/search"),
   "hotel":require("./reducers/hotel"),
   "hotels":require("./reducers/hotels"),
+  "auth":require("./reducers/auth"),
+  "account":require("./reducers/account"),
 };
 for(let hoc in hocs)
 {
