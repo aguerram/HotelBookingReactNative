@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, ImageBackground, Button } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ImageBackground,
+  Button,
+  Alert,
+} from "react-native";
 import { SignHotelRedux } from "../data/connect";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,8 +17,52 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 import MoonText from "../components/MoonText";
-import {Tools} from "../utils/Tools"
+import { Tools } from "../utils/Tools";
+import axios from "../utils/axios";
 const SingleHotelScreen = ({ hotel, search, ...props }) => {
+  const saveReservation = () => {
+    console.log("called");
+    if (global.token) {
+      axios({
+        method: "POST",
+        url: Tools.URL(`/reservation/${hotel.id}`),
+        data: {
+          from: search.from,
+          to: search.to,
+          for: search.for,
+          rooms: search.rooms,
+        },
+      })
+        .then(({ data }) => {
+          Alert.alert("Merci pour choisir notre hôtel",data.message);
+          axios({
+            url:Tools.URL("/profile")
+          })
+          .then(({data})=>{
+            props.setAccount(data);
+          })
+          .catch(err=>{
+
+          })
+        })
+        .catch(({ response }) => {
+          if (response.status == 401) {
+            props.navigation.navigate("Login");
+            global.token = null;
+          } else if (response.status == 422) {
+            let errors = [];
+            for (let e of Object.keys(response.data.errors)) {
+              errors.push(response.data.errors[e]);
+            }
+            console.log(response);
+            Alert.alert("Erreur", errors.join("\n"));
+          }
+          console.log(response);
+        });
+    } else {
+      props.navigation.navigate("Login");
+    }
+  };
   return (
     <ScrollView
       style={{
@@ -25,7 +76,11 @@ const SingleHotelScreen = ({ hotel, search, ...props }) => {
           height: 200,
           borderRadius: 10,
         }}
-        source={hotel.cover?{uri:Tools.STORAGE(hotel.id)}:require("../assets/images/hotel.jpg")}
+        source={
+          hotel.cover
+            ? { uri: Tools.STORAGE(hotel.id) }
+            : require("../assets/images/hotel.jpg")
+        }
       >
         <View
           style={{
@@ -55,7 +110,11 @@ const SingleHotelScreen = ({ hotel, search, ...props }) => {
           >
             <Ionicons color="#DC463C" size={32} name="md-heart" />
           </TouchableNativeFeedback>
-          <Button color={Colors.tintColor} title="Réservez dès maintenant" />
+          <Button
+            onPress={saveReservation}
+            color={Colors.tintColor}
+            title="Réservez dès maintenant"
+          />
         </View>
       </ImageBackground>
       <View

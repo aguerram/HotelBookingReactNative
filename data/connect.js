@@ -46,7 +46,11 @@ export const SignHotelRedux = connect(
     modifyHotelList:(data)=>({
       type:Types.hotels.change,
       payload:data
-    })
+    }),
+    setAccount:(payload)=>({
+      type:Types.account.set,
+      payload
+    }),
   }
 );
 export const LoginRedux = connect(

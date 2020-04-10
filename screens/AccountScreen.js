@@ -5,9 +5,11 @@ import Colors from "../constants/Colors";
 import axios from "../utils/axios";
 import { Tools } from "../utils/Tools";
 import { AccountRedux } from "../data/connect";
+import { ScrollView } from "react-native-gesture-handler";
 const AccountScreen = (props) => {
   useEffect(() => {
-    if (global.token && (!props.account?.id || props.account.id==0)) {
+    console.log(props.account);
+    if (global.token && (!props.account?.id || props.account.id == 0)) {
       axios({
         url: Tools.URL(`/profile`),
         method: "GET",
@@ -16,9 +18,8 @@ const AccountScreen = (props) => {
           props.setAccount(data);
         })
         .catch(({ response }) => {
-          if(response.status==401)
-          { 
-            props.navigation.navigate("Login")
+          if (response.status == 401) {
+            props.navigation.navigate("Login");
           }
         });
     }
@@ -103,7 +104,7 @@ const AccountScreen = (props) => {
           title="Déconnexion"
         />
       </View>
-      <View
+      <ScrollView
         style={{
           width: "60%",
           backgroundColor: "white",
@@ -113,36 +114,41 @@ const AccountScreen = (props) => {
         <MoonText size={14} bold>
           Réservations
         </MoonText>
-        {props.account.reservations.map((r) => {
-          <View style={
-            {
-              margin:5,
-              borderWidth:1,
-              borderColor:Colors.Gray
-            }
-          }>
-            <MoonText>{r.hotel?.title}</MoonText>
-            <MoonText>Pour {r.guests}</MoonText>
+        {props.account.reservations.map((r) => (
+          <View
+            style={{
+              margin: 5,
+              borderWidth: 1,
+              borderColor: Colors.Gray,
+              padding:5
+            }}
+          >
+            <MoonText bold>{r.hotel?.title}</MoonText>
+            <MoonText>Pour {r.guests} personne</MoonText>
             <MoonText>ET {r.rooms} chambres</MoonText>
-            <MoonText>De {r.from} à {r.to}</MoonText>
-          </View>;
-        })}
-        <View style={{marginTop:8}}></View>
+            <MoonText>
+              De {r.from} à {r.to}
+            </MoonText>
+          </View>
+        ))}
+        <View style={{ marginTop: 8 }}></View>
         <MoonText size={14} bold>
           Votes
         </MoonText>
-        {props.account.reviews.map((r) => {
-          <View style={
-            {
-              margin:5,
-              borderWidth:1,
-              borderColor:Colors.Gray
-            }
-          }>
-            <MoonText>{r.hotel?.title}</MoonText>
-          </View>;
-        })}
-      </View>
+        {props.account.reviews.map((r) => (
+          <View
+            style={{
+              margin: 5,
+              borderWidth: 1,
+              borderColor: Colors.mediumLightGray,
+              padding:5
+            }}
+            key={r.id}
+          >
+            <MoonText>{r.hotel.title}</MoonText>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };

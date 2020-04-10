@@ -24,6 +24,7 @@ import RattingScreen from "./screens/RattingScreen";
 import SignupScreen from "./screens/SignupScreen";
 import { Provider } from "react-redux";
 import Store from "./data/store";
+import MoonText from "./components/MoonText";
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -62,8 +63,20 @@ export default function App(props) {
 
   if (!isLoadingComplete) {
     return (
-      <View style={styles.container}>
-        <Text>Loading ...</Text>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#B84BFF",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={
+          {
+            fontSize:22,
+            color:"white"
+          }
+        }>S'il vous plaît, attendez</Text>
       </View>
     );
   } else {
