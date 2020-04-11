@@ -77,6 +77,7 @@ export default function App(props) {
             color:"white"
           }
         }>S'il vous plaît, attendez</Text>
+          
       </View>
     );
   } else {
