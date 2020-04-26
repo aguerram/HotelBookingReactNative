@@ -25,8 +25,9 @@ import SignupScreen from "./screens/SignupScreen";
 import { Provider } from "react-redux";
 import Store from "./data/store";
 import MoonText from "./components/MoonText";
+import {Config} from "./config"
 const Stack = createStackNavigator();
-
+console.log(Config.BASE_URL)
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
